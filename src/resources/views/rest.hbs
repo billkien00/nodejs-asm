@@ -1,0 +1,82 @@
+<div class="mt-4 mx-auto col-6">
+  <h1>Nghỉ phép</h1>
+  <form method="post" action="/attendance/registered?_method=PUT">
+    <div class="mb-3">
+      <label for="date" class="form-label">Chọn ngày nghỉ</label>
+      <input type="text" class="form-control" id="datepicker" name="date">
+    </div>
+    <div class="mb-3">
+      <label for="reason" class="form-label">Lý do nghỉ phép</label>
+      <textarea type="" class="form-control" id="reason" name="reason"></textarea>
+    </div>
+    <div class="mb-3">
+      <label for="annualLeave" class="form-label">Số ngày nghỉ còn lại</label>
+      <i class="bi bi-info-circle-fill" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
+      <input type="text" class="form-control" id="annualLeave disabledInput" name="annualLeave"
+        placeholder="{{user.annualLeave}}" disabled>
+    </div>
+    <div class="mb-3">
+      <label for="annualLeave" class="form-label ">chọn số giờ nghỉ</label>
+
+
+      <select class="form-select ice-cream" id="time" name="time">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+      </select>
+      <div class="result"></div>
+    </div>
+    <button type="submit" class="btn btn-primary">Nộp</button>
+  </form>
+
+
+
+
+
+
+
+
+  <script>
+    const selectElement = document.querySelector('.ice-cream');
+
+    selectElement.addEventListener('change', (event) => {
+      const result = document.querySelector('.result');
+      const a = event.target.value / 8
+      result.textContent = a;
+    });
+
+
+
+    $( "#datepicker" ).datepicker({multidate: true,	format: 'dd-mm-yyyy'});
+
+
+
+  </script>
+
+
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Chú ý!!!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          Một ngày nghỉ tương dương với 8 tiếng.
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+        </div>
+      </div>
+    </div>
+  </div>
