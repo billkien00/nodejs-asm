@@ -16,8 +16,9 @@ class TimeInformationController {
         ts.map((e) => {
           const a = [...e.items];
           res.render("timeInformation", {
-            ts: mutipleMongooseToObject(ts),
-            a: mutipleMongooseToObject(a),
+            ts,
+            a,
+            pageTitle: "Thông tin giờ làm",
           });
         });
       })

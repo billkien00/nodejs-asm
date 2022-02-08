@@ -1,8 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const methodOverride = require("method-override");
-const handlebars = require("express-handlebars");
-const moment = require("moment"); // require
+const moment = require("moment");
 
 const route = require("./routes");
 const db = require("./config/db");
@@ -13,6 +12,7 @@ db.connect();
 
 const app = express();
 const port = 3000;
+
 //get data from form data with method = 'post'
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -30,25 +30,27 @@ app.use((req, res, next) => {
     .catch((err) => console.log(err));
 });
 
+//moment
+app.locals.moment = require("moment");
+
 //http logger
 // app.use(morgan("combined"));
-
 //template engine
-app.engine(
-  "hbs",
-  handlebars.engine({
-    extname: ".hbs",
-    helpers: {
-      compare: (a, b) => a > b,
-      date: (a) => moment(a).format("Do MMMM YYYY"),
-      time: (a) => moment(a).format("MMMM Do YYYY, h:mm:ss a"),
-      h: (a) => moment(a).format("LTS"),
-    },
-  })
-);
-app.set("view engine", "hbs");
+// app.engine(
+//   "hbs",
+//   handlebars.engine({
+//     extname: ".hbs",
+//     helpers: {
+//       compare: (a, b) => a > b,
+//       date: (a) => moment(a).format("Do MMMM YYYY"),
+//       time: (a) => moment(a).format("MMMM Do YYYY, h:mm:ss a"),
+//       h: (a) => moment(a).format("LTS"),
+//     },
+//   })
+// );
+
+app.set("view engine", "ejs");
 app.set("views", "src/resources/views");
-app.use("/src/public/css", express.static("/src/public/css"));
 
 //route init
 route(app);

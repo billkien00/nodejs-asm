@@ -1,0 +1,32 @@
+
+    <%- include('includes/header.ejs') %>
+
+    <div class="mt-4 mx-auto col-6">
+      <h1>Đã kết thúc làm việc</h1> 
+      <form action="/attendance">
+        <div class="mb-3">
+          <label for="name" class="form-label">Số giờ đã làm trong hôm nay</label>
+          <input type="text" class="form-control" id="name disabledInput" name="name" placeholder="<%= result.totalHours %>H (tăng ca:<%= result.overTime %>H)"  disabled>
+        </div>
+        <div class="mb-3">
+          <label for="name" class="form-label">danh sách điểm danh trong ngày:</label>
+
+        <% result.items.forEach((items)=>{ %>
+          
+          <input type="text" class="form-control" id="name disabledInput" name="name" placeholder="<%= moment(items.startTime).format("MMMM Do YYYY, h:mm:ss a") %> --> <%= moment(items.endTime).format("MMMM Do YYYY, h:mm:ss a") %> (<%=items.workplace%>) " disabled>
+        <% }) %>
+
+        </div>
+  
+        
+          <!-- <input type="text" class="form-control" id="location disabledInput" name="location" placeholder="<%= user.location %>" disabled>  -->
+    
+         
+        <button type="submit" class="btn btn-primary">Quay về</button>
+      </form>
+  </div>
+  
+  
+  
+
+  <%- include('includes/footer.ejs') %>

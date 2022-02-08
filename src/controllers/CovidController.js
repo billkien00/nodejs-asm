@@ -1,15 +1,12 @@
 const Covid = require("../models/Covid");
-
-//từ bản update express handlebar 4.6 trở đi
-//ko cho phép truy cập trực tiếp của các property qua đối tượng
-const { mongooseToObject } = require("../util/mongoose");
+var moment = require("moment");
 
 class CovidController {
   //[Get] /
   show(req, res, next) {
     Covid.findOne({})
       .then((covid) => {
-        res.render("covid", { covid: mongooseToObject(covid) });
+        res.render("covid", { covid, pageTitle: 'Thông tin Covid' });
       })
       .catch((err) => console.log(err));
   }
@@ -24,7 +21,7 @@ class CovidController {
       .then((covid) => {
         console.log(req.body.name1);
         if (covid !== null) {
-          res.render("covid", { covid: mongooseToObject(covid) });
+          res.render("covid", { covid,pageTitle: 'Thông tin Covid' });
         } else {
           const cv = new Covid(req.body);
           cv.save().then(res.redirect("/covid"));

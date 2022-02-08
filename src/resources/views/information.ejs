@@ -1,0 +1,107 @@
+
+    <%- include('includes/header.ejs') %>
+
+    <div class="mt-4 mx-auto col-7">
+      <form action="/">
+        <h1 class="my-4">Thông tin cá nhân</h1>
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-3 mb-3">
+              <img
+                src="<%= user.image %>"
+                class="img-thumbnail"
+                alt="<%= user.image %>"
+              />
+
+              <a
+                class="btn btn-secondary btn-sm col-12"
+                href="/information/update"
+                role="button"
+                >sửa</a
+              >
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                <label for="name" class="form-label">ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="disabledInput"
+                  placeholder="<%= user.id %>"
+                  disabled
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="name" class="form-label">Họ và Tên</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="disabledInput"
+                  placeholder="<%= user.name %>"
+                  disabled
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="name" class="form-label">Ngày sinh</label>
+          <input
+            type="text"
+            class="form-control"
+            id="disabledInput"
+            placeholder="<%= moment(user.doB).format("Do MMMM YYYY") %>"
+            disabled
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="name" class="form-label">Lương</label>
+          <input
+            type="text"
+            class="form-control"
+            id="disabledInput"
+            placeholder="<%= user.salaryScale %>"
+            disabled
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="name" class="form-label">Ngày bắt đầu làm</label>
+          <input
+            type="text"
+            class="form-control"
+            id="disabledInput"
+            placeholder="<%= moment(user.createdAt).format("Do MMMM YYYY") %>"
+            disabled
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="name" class="form-label">Phòng ban</label>
+          <input
+            type="text"
+            class="form-control"
+            id="disabledInput"
+            placeholder="<%= user.department %>"
+            disabled
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="name" class="form-label">Số ngày nghỉ còn lại</label>
+          <input
+            type="text"
+            class="form-control"
+            id="disabledInput"
+            placeholder="<%= user.annualLeave %>"
+            disabled
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary">Quay về</button>
+      </form>
+    </div>
+
+    <%- include('includes/footer.ejs') %>

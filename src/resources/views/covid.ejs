@@ -1,0 +1,86 @@
+
+
+    <%- include('includes/header.ejs') %>
+
+    <div class="container">
+      <div class="row">
+        <div class="mt-4 mx-auto col-6">
+          <form method="post" action="/covid?_method=PUT">
+            <div class="mb-3">
+              <label for="name" class="form-label">Nhiệt độ cơ thể:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="temperature"
+                name="temperature"
+                placeholder="36"
+              />
+            </div>
+
+            <div class="mb-3">
+              <label for="name" class="form-label"><b>Bị covid</b></label>
+
+              <input
+                class="form-check-input"
+                type="checkbox"
+                value="checked"
+                id="flexCheckDefault"
+                name="covid"
+              />
+            </div>
+
+            <% if(covid) {}else{ %>
+            <div class="mb-3">
+              <label for="name" class="form-label">Mũi 1</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name1"
+                name="name1"
+                placeholder="tên vaccin"
+              />
+              <input type="date" class="form-control" id="date1" name="date1" />
+            </div>
+            <div class="mb-3">
+              <label for="name" class="form-label">Mũi 2</label>
+              <input
+                type="text"
+                class="form-control"
+                id="name2"
+                name="name2"
+                placeholder="tên vaccin"
+              />
+              <input type="date" class="form-control" id="date2" name="date2" />
+            </div>
+            <% } %>
+
+            <button type="submit" class="btn btn-primary">đăng kí</button>
+          </form>
+        </div>
+
+        <% if(covid){ %>
+        <div class="mt-4 mx-auto col-6">
+          <div class="card">
+            <div class="card-header">
+              Thông tin đã đăng ký (<%= moment(covid.updatedAt).format("Do MMMM YYYY") %>)
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Nhiệt độ  <%= covid.temperature %> </h5>
+              
+              <h5 class="card-title">
+                Mũi 1: <%= covid.name1 %> (<%= moment(covid.date1).format("Do MMMM YYYY") %>)
+              </h5>
+              <h5 class="card-title">
+                Mũi 2: <%= covid.name2 %> (<%= moment(covid.date2).format("Do MMMM YYYY") %>)
+              </h5>
+              <h5 class="card-title">
+                Tình trạng covid: <% if(covid.covid){ %>đã bị<%} else {%> không bị <%}%>
+              </h5>
+            </div>
+          </div>
+
+        <% } %>
+      </div>
+    </div>
+
+    <%- include('includes/footer.ejs') %>

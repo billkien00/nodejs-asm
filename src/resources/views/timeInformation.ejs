@@ -1,0 +1,35 @@
+
+    <%- include('includes/header.ejs') %>
+
+    <div class="container">
+      <div class="row">
+        <% ts.forEach((ts)=>{ %>
+
+        <div class="col mt-4">
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h5 class="card-title">
+                Ngày <%= ts.day %> tháng <%= ts.month %>
+              </h5>
+              <h6 class="card-subtitle mb-2 text-muted">
+                Tổng Giờ làm <%= ts.totalHours %> làm thêm: <%= ts.overTime %>
+              </h6>
+
+              <!-- {{#each this.items}} -->
+              <% ts.items.forEach((items)=>{ %>
+                <p class="card-text">
+                 
+                  <%= moment(items.startTime).format("LTS") %> --> <%=moment(items.endTime).format("LTS")%> ( <%=items.workplace %>)
+                </p>
+                
+              <% }); %>
+              <!-- {{/each}} -->
+            </div>
+          </div>
+        </div>
+
+        <% }); %>
+      </div>
+    </div>
+
+    <%- include('includes/footer.ejs') %>

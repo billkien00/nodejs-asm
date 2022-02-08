@@ -1,16 +1,13 @@
 const User = require("../models/User");
 const Timesheet = require("../models/Timesheet");
 const Rest = require("../models/Rest");
-//từ bản update express handlebar 4.6 trở đi
-//ko cho phép truy cập trực tiếp của các property qua đối tượng
-const { mongooseToObject } = require("../util/mongoose");
 
 class AttendanceController {
   //[GET] /attendance
   index(req, res, next) {
     User.findOne({})
       .then((user) => {
-        res.render("attendance", { user: mongooseToObject(user) });
+        res.render("attendance", { user, pageTitle: "Điểm danh" });
       })
       .catch(next);
   }
@@ -19,9 +16,7 @@ class AttendanceController {
   start(req, res, next) {
     User.findOne({})
       .then((user) => {
-        res.render("start", {
-          user: mongooseToObject(user),
-        });
+        res.render("start", { user, pageTitle: "Điểm danh" });
       })
       .catch(next);
   }
@@ -64,7 +59,7 @@ class AttendanceController {
           runValidators: true, // validate before update
         })
           .then((user) => {
-            res.render("started", { user: mongooseToObject(user) });
+            res.render("started", { user, pageTitle: "Đã điểm danh" });
           })
           .catch((err) => console.log(err));
       })
@@ -107,12 +102,10 @@ class AttendanceController {
         )
           .then((user) => {
             console.log(result);
-            res.render("end", {
-              user: mongooseToObject(user),
-              result: mongooseToObject(result),
-            });
+            res.render("end", { user, result, pageTitle: "Kết thúc làm" });
           })
           .catch((err) => console.log(err));
+        s;
       })
       .catch((err) => {
         console.log(err);
@@ -123,7 +116,7 @@ class AttendanceController {
   rest(req, res, next) {
     User.findOne({})
       .then((user) => {
-        res.render("rest", { user: mongooseToObject(user) });
+        res.render("rest", { user, pageTitle: "Nghỉ phép" });
       })
       .catch(next);
   }

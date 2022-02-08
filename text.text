@@ -1,0 +1,7 @@
+<%= %>
+<%= date user.annualLeave %>
+<% if(){ %>
+<% } else { %>
+<% } %>
+
+moment(covid.updatedAt).format("Do MMMM YYYY")

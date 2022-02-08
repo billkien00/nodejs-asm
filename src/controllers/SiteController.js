@@ -1,7 +1,7 @@
 class SiteController {
   //[GET] /
   home(req, res, next) {
-    res.render("home");
+    res.render("home", { pageTitle: "Trang chủ" });
   }
 }
 

@@ -9,7 +9,7 @@ class InfomationController {
   show(req, res, next) {
     User.findOne(req.user._id)
       .then((user) => {
-        res.render("information", { user: mongooseToObject(user) });
+        res.render("information", { user, pageTitle: "Thông tin cá nhân" });
       })
       .catch((err) => console.log(err));
   }
@@ -18,7 +18,7 @@ class InfomationController {
   update(req, res, next) {
     User.findOne(req.user._id)
       .then((user) => {
-        res.render("updateimg", { user: mongooseToObject(user) });
+        res.render("updateimg", { user, pageTitle: "Cập nhật ảnh cá nhân" });
       })
       .catch((err) => console.log(err));
   }
