@@ -1,0 +1,18 @@
+<%- include('includes/header.ejs') %>
+<div class="container">
+  <div class="row">
+    <h2 class="mt-4">Thông tin Covid</h2>
+    <% users.forEach((user)=>{ %>
+    <div class="card m-4" style="width: 18rem">
+      <img src="/<%=user.image%>" class="card-img-top" alt="<%=user.image%>" />
+      <div class="card-body">
+        <h5 class="card-title"><%=user.name%></h5>
+        <a href="/manager/covid/<%=user._id%>" class="btn btn-primary"
+          >Chi tiết</a
+        >
+      </div>
+    </div>
+    <% }) %>
+  </div>
+</div>
+<%- include('includes/footer.ejs') %>

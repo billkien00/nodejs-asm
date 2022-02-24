@@ -9,6 +9,7 @@ const Covid = new Schema(
     name2: { type: String, required: true },
     date2: { type: Date, required: true },
     covid: { type: Boolean },
+    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
   },
   {
     timestamps: true,

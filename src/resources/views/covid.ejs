@@ -5,7 +5,14 @@
     <div class="container">
       <div class="row">
         <div class="mt-4 mx-auto col-6">
-          <form method="post" action="/covid?_method=PUT">
+          <% if (errorMessage) { %>
+            <div class="col-6 mx-auto">
+              <div class="text-center p-3 border bg-danger text-white rounded">
+                <%= errorMessage %>
+              </div>
+            </div>
+            <% } %>
+          <form method="post" action="/covid?_method=PATCH">
             <div class="mb-3">
               <label for="name" class="form-label">Nhiệt độ cơ thể:</label>
               <input
@@ -14,6 +21,7 @@
                 id="temperature"
                 name="temperature"
                 placeholder="36"
+                value="<%= oldInput.temperature %>"
               />
             </div>
 
@@ -26,6 +34,7 @@
                 value="checked"
                 id="flexCheckDefault"
                 name="covid"
+             
               />
             </div>
 
@@ -38,8 +47,9 @@
                 id="name1"
                 name="name1"
                 placeholder="tên vaccin"
+                value="<%= oldInput.name1 %>"
               />
-              <input type="date" class="form-control" id="date1" name="date1" />
+              <input type="date" class="form-control" id="date1" name="date1" value="<%= oldInput.date1 %>"/>
             </div>
             <div class="mb-3">
               <label for="name" class="form-label">Mũi 2</label>
@@ -49,11 +59,12 @@
                 id="name2"
                 name="name2"
                 placeholder="tên vaccin"
+                value="<%= oldInput.name2 %>"
               />
-              <input type="date" class="form-control" id="date2" name="date2" />
+              <input type="date" class="form-control" id="date2" name="date2" value="<%= oldInput.date2 %>" />
             </div>
             <% } %>
-
+          
             <button type="submit" class="btn btn-primary">đăng kí</button>
           </form>
         </div>
@@ -61,8 +72,12 @@
         <% if(covid){ %>
         <div class="mt-4 mx-auto col-6">
           <div class="card">
-            <div class="card-header">
-              Thông tin đã đăng ký (<%= moment(covid.updatedAt).format("Do MMMM YYYY") %>)
+            <div class="card-header container">
+              <div class="row">
+                <div class="col-11">Thông tin đã đăng ký (<%= moment(covid.updatedAt).format("Do MMMM YYYY") %>)</div>
+                <div class="col-1"><a href="/covid/download"><i class="bi bi-box-arrow-in-down"></i></a></div>
+              </div>
+              
             </div>
             <div class="card-body">
               <h5 class="card-title">Nhiệt độ  <%= covid.temperature %> </h5>
@@ -76,6 +91,7 @@
               <h5 class="card-title">
                 Tình trạng covid: <% if(covid.covid){ %>đã bị<%} else {%> không bị <%}%>
               </h5>
+              
             </div>
           </div>
 

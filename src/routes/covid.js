@@ -1,11 +1,19 @@
 const express = require("express");
+const { body } = require("express-validator");
+
 const router = express.Router();
 const covidController = require("../controllers/CovidController");
 
-// router.put("/update", covidController.updated);
-// router.get("/update", covidController.update);
+router.get('/download',covidController.download)
 
-router.put("/", covidController.covidUpdated);
+router.patch(
+  "/",
+  [
+    body("temperature", "Nhiệt độ không hợp lệ").isNumeric(),
+  ],
+  covidController.covidUpdated
+);
 router.get("/", covidController.show);
+
 
 module.exports = router;

@@ -1,0 +1,140 @@
+<%- include('includes/header.ejs') %>
+
+<div class="container">
+  <div class="row">
+
+    <div class="d-flex bd-highlight">
+      <div class="dropdown mt-4 p-2 w-100 bd-highlight">
+      <button
+        class="btn btn-primary dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton1"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+        Chọn tháng
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><a class="dropdown-item" href="/manager/time/<%=userId%>/1">Tháng 1</a></li>
+        <li><a class="dropdown-item" href="/manager/time/<%=userId%>/2">Tháng 2</a></li>
+        <li><a class="dropdown-item" href="/manager/time/<%=userId%>/3">Tháng 3</a></li>
+        <li><a class="dropdown-item" href="/manager/time/<%=userId%>/4">Tháng 4</a></li>
+        <li><a class="dropdown-item" href="/manager/time/<%=userId%>/5">Tháng 5</a></li>
+        <li><a class="dropdown-item" href="/manager/time/<%=userId%>/6">Tháng 6</a></li>
+        <li><a class="dropdown-item" href="/manager/time/<%=userId%>/7">Tháng 7</a></li>
+        <li><a class="dropdown-item" href="/manager/time/<%=userId%>/8">Tháng 8</a></li>
+        <li><a class="dropdown-item" href="/manager/time/<%=userId%>/9">Tháng 9</a></li>
+        <li><a class="dropdown-item" href="/manager/time/<%=userId%>/10">Tháng 10</a></li>
+        <li><a class="dropdown-item" href="/manager/time/<%=userId%>/11">Tháng 11</a></li>
+        <li><a class="dropdown-item" href="/manager/time/<%=userId%>/12">Tháng 12</a></li>
+      </ul>
+    </div>
+    <%if(salary){%>
+      <div class="mt-4 p-2 flex-shrink-1 bd-highlight">
+  
+        <%if(_sort.type == 'desc'){%>
+          <a class="dropdown-item" href="?_sort&field=day&type=asc">Xắp xếp theo ngày <i class="bi bi-sort-numeric-down"></i></a>
+          <%} else{%>
+            <a class="dropdown-item" href="?_sort&field=day&type=desc">Xắp xếp theo ngày <i class="bi bi-sort-numeric-down-alt"></i></a>
+            <%}%>
+      </div>
+      <%}%>
+    </div>
+
+  </div>
+  <% if (ts.length> 0) { %>
+
+    <h4 class="mt-4">
+      <%if(salary){%>Lương tháng <%=month%>: <%=user.salaryScale*3000000 +
+      (totalOvertime - (missTime-user.annualLeaveTime)) * 200000%><%}%>
+    </h4>
+    <%if(salary && confirm){%>
+      <form action="/manager/time/confirm?_method=PATCH&userId=<%=userId%>&month=<%=month%>" method="post" class="mt-4">
+        <button type="submit" class="btn btn-success">Xác nhận tháng <%=month%><i class="bi bi-check2-circle"></i></button>
+       </form>
+    <%}%>
+  <div class="row">
+
+
+       
+
+    
+    <% ts.forEach((ts)=>{ %>
+    <div class="col mt-4">
+      <div class="card" style="width: 20rem">
+        <div class="card-body">
+          <div class="row">
+
+            <h5 class="card-title col-7">Ngày <%= ts.day %> tháng <%= ts.month %></h5>
+  
+          <%if(!ts.confirm){%>
+            <form action="/manager/time/delete?_method=DELETE&userId=<%=userId%>&day=<%= ts.day %>&month=<%= ts.month %>" method="post" class="col">
+              <button type="submit" class="btn btn-danger"><i class="bi bi-trash"></i></button>
+              <a class="btn btn-success" href="/manager/fix?userId=<%=userId%>&day=<%= ts.day %>&month=<%= ts.month %>" role="button"><i class="bi bi-tools"></i></a>
+             </form>
+          <%}%>
+
+        
+            
+          </div>
+
+          <% if(onlineDay==ts.day && onlineMonth==ts.month){%>
+          <h6 class="card-subtitle mb-2 text-muted">Đang làm việc</h6>
+          <%}else{%>
+          <h6 class="card-subtitle mb-2 text-muted mt-4">
+            Tổng Giờ làm <%= ts.totalHours %> (Làm thêm: <%= ts.overTime %>)
+          </h6>
+          <%}%> <% ts.items.forEach((items)=>{ %>
+          <p class="card-text">
+            <%= moment(items.startTime).format("LTS") %> -->
+            <%if(items.endTime==undefined){%> Đang làm việc <%} else{ %>
+            <%=moment(items.endTime).format("LTS")%> ( <%=items.workplace %>)
+            <%}%>
+          </p>
+
+          <% }); %>
+        </div>
+      </div>
+    </div>
+    <% }); %> <% } else { %>
+    <h3 class="mt-4">Chưa có dữ liệu</h3>
+    <% } %>
+  </div>
+</div>
+<%if(ts.length >0){%>
+<div class="mx-auto mt-4" style="width: 100px">
+  <ul class="pagination">
+    <% if (currentPage !== 1 && previousPage !== 1) { %>
+    <li class="page-item">
+      <a class="page-link" href="/time-information?page=1">1</a>
+    </li>
+    <% } %> <% if (hasPreviousPage) { %>
+    <li class="page-item">
+      <a class="page-link" href="/time-information?page=<%= previousPage %>"
+        ><%= previousPage %></a
+      >
+    </li>
+    <% } %>
+
+    <li class="page-item active">
+      <a class="page-link" href="/time-information?page=<%= currentPage %>"
+        ><%= currentPage %></a
+      >
+    </li>
+
+    <% if (hasNextPage) { %>
+    <li class="page-item">
+      <a class="page-link" href="/time-information?page=<%= nextPage %>"
+        ><%= nextPage %></a
+      >
+    </li>
+    <% } %> <% if (lastPage !== currentPage && nextPage !== lastPage) { %>
+    <li class="page-item">
+      <a class="page-link" href="/time-information?page=<%= lastPage %>"
+        ><%= lastPage %></a
+      >
+    </li>
+    <% } %>
+  </ul>
+</div>
+<%}%> <%- include('includes/footer.ejs') %>

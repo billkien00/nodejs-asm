@@ -1,35 +1,57 @@
 const User = require("../models/User");
+const fileHelper = require("../util/file");
 
 //từ bản update express handlebar 4.6 trở đi
 //ko cho phép truy cập trực tiếp của các property qua đối tượng
-const { mongooseToObject } = require("../util/mongoose");
 
 class InfomationController {
   //[GET] /
   show(req, res, next) {
-    User.findOne(req.user._id)
+    User.findOne({ _id: req.user._id })
       .then((user) => {
-        res.render("information", { user, pageTitle: "Thông tin cá nhân" });
+        res.render("information", {
+          user,
+          pageTitle: "Thông tin cá nhân",
+          err: false,
+          errorMessage: "Chưa chọn file ảnh",
+        });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => next(new Error(err)));
   }
 
   //[GET] /update
   update(req, res, next) {
-    User.findOne(req.user._id)
+    User.findOne({ _id: req.user._id })
       .then((user) => {
         res.render("updateimg", { user, pageTitle: "Cập nhật ảnh cá nhân" });
       })
-      .catch((err) => console.log(err));
+      .catch((err) => next(new Error(err)));
   }
 
   //[PUT] /update
   updated(req, res, next) {
-    User.findOneAndUpdate(req.user._id, req.body)
+    const image = req.file;
+    if (!image) {
+      return res.status(422).render("information", {
+        user: req.user,
+        pageTitle: "Thông tin cá nhân",
+        err: true,
+        errorMessage: "Chưa chọn file ảnh",
+      });
+    }
+    fileHelper.deleteFile(req.user.image);
+    User.findOneAndUpdate(
+      { _id: req.user._id },
+      { image: req.file.path },
+      {
+        new: true, // return updated doc
+        runValidators: true, // validate before update
+      }
+    )
       .then((user) => {
         res.redirect("/information");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => next(new Error(err)));
   }
 }
 

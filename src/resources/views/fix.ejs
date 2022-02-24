@@ -1,0 +1,87 @@
+<%- include('includes/header.ejs') %>
+
+<div class="col-6 mx-auto mt-4">
+  <h2>Sửa thông tin(<%= ts.day %>/<%= ts.month %>)</h2>
+  <form
+    action="/manager/fixed?userId=<%=userId%>&day=<%= ts.day %>&month=<%= ts.month %>&_method=PATCH"
+    method="post"
+  >
+    <% if (errorMessage) { %>
+    <div class="col-6 mx-auto m-4">
+      <div class="text-center p-3 border bg-danger text-white rounded">
+        <%= errorMessage %>
+      </div>
+    </div>
+    <% } %>
+    <div class="row">
+      <div class="input-group mb-3 col">
+        <span class="input-group-text" id="inputGroup-sizing-default"
+          >Ngày</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          value="<%=ts.day%>"
+          name="day"
+        />
+      </div>
+
+      <div class="input-group mb-3 col">
+        <span class="input-group-text" id="inputGroup-sizing-default"
+          >Tháng</span
+        >
+        <input
+          type="text"
+          class="form-control"
+          value="<%=ts.month%>"
+          name="month"
+        />
+      </div>
+    </div>
+    <%ts.items.map(e=>{%>
+    <div class="card p-4 mb-3">
+      <h6>Lần <%=ts.items.indexOf(e)+1%></h6>
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default"
+          >Thời gian điểm danh</span
+        >
+        <input
+          type="time"
+          class="form-control"
+          name="startTime"
+          value="<%=moment(e.startTime).format('HH:MM');%>"
+        />
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default"
+          >Thời gian kết thúc</span
+        >
+        <input
+          type="time"
+          class="form-control"
+          name="endTime"
+          value="<%=moment(e.endTime).format('HH:MM');%>"
+        />
+      </div>
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default"
+          >Nơi làm việc</span
+        >
+
+        <select class="form-select" name="workplace">
+          <option selected><%=e.workplace%></option>
+          <option value="company">Công ty</option>
+          <option value="home">Nhà</option>
+          <option value="outsite">Khách hàng</option>
+        </select>
+      </div>
+    </div>
+
+    <%})%>
+
+    <button type="submit" class="btn btn-primary">Sửa</button>
+  </form>
+</div>
+<%- include('includes/footer.ejs') %>

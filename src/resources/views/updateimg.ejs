@@ -3,7 +3,7 @@
     <div class="mt-4 col-6 mx-auto">
       <h1 class="mb-3">Cập Nhật Ảnh</h1>
       <div class="bm-3">
-        <form method="post" action="/information/update?_method=PUT">
+        <form method="post" action="/information/update?_method=PATCH">
           <label for="name" class="form-label">Nhập Url:</label>
 
           <div class="row">
@@ -13,6 +13,7 @@
               id="image"
               name="image"
             />
+      
             <button type="submit" class="btn btn-primary col-3">Lưu</button>
           </div>
         </form>

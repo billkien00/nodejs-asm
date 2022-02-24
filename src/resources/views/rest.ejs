@@ -1,74 +1,119 @@
+<%- include('includes/header.ejs') %>
+<div class="mt-4 mx-auto col-6">
+  <h1>Nghỉ phép</h1>
+  <% if (errorMessage) { %>
+  <div class="col-6 mx-auto">
+    <div class="text-center p-3 border bg-danger text-white rounded">
+      <%= errorMessage %>
+    </div>
+  </div>
+  <% } %>
+  <form method="post" action="/attendance/registered?_method=PATCH">
+    <div class="mb-3">
+      <label for="date" class="form-label">Chọn ngày nghỉ</label>
+      <input
+        type="text"
+        class="form-control"
+        id="datepicker"
+        name="date"
+        value="<%= oldInput.date %>"
+      />
+    </div>
+    <div class="mb-3">
+      <label for="reason" class="form-label">Lý do nghỉ phép</label>
+      <textarea
+        class="form-control"
+        id="reason"
+        name="reason"
+        placeholder="Từ 5 đến 400 ký tự"
+      >
+<%= oldInput.reason %></textarea
+      >
+    </div>
+    <div class="mb-3">
+      <label for="annualLeave" class="form-label">Số ngày nghỉ còn lại</label>
+      <i
+        class="bi bi-info-circle-fill"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+      ></i>
+      <input
+        type="text"
+        class="form-control"
+        id="annualLeave disabledInput"
+        name="annualLeave"
+        placeholder="<%=user.annualLeave%>"
+        disabled
+      />
+    </div>
+    <div class="mb-3">
+      <label for="annualLeave" class="form-label">chọn số giờ nghỉ</label>
 
-    <%- include('includes/header.ejs') %>
+      <select
+        class="form-select ice-cream"
+        id="time"
+        name="time"
+        value="<%= oldInput.time %>"
+      >
+        >
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+      </select>
+      <div class="result"></div>
+    </div>
+    <button type="submit" class="btn btn-primary">Nộp</button>
+  </form>
 
-    <div class="mt-4 mx-auto col-6">
-      <h1>Nghỉ phép</h1>
-      <form method="post" action="/attendance/registered?_method=PUT">
-        <div class="mb-3">
-          <label for="date" class="form-label">Chọn ngày nghỉ</label>
-          <input type="text" class="form-control" id="datepicker" name="date">
+  <script>
+    const selectElement = document.querySelector(".ice-cream");
+
+    selectElement.addEventListener("change", (event) => {
+      const result = document.querySelector(".result");
+      const a = event.target.value / 8;
+      result.textContent = a;
+    });
+
+    $("#datepicker").datepicker({ multidate: true, format: "yyyy-mm-dd" });
+  </script>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Chú ý!!!</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
         </div>
-        <div class="mb-3">
-          <label for="reason" class="form-label">Lý do nghỉ phép</label>
-          <textarea type="" class="form-control" id="reason" name="reason"></textarea>
-        </div>
-        <div class="mb-3">
-          <label for="annualLeave" class="form-label">Số ngày nghỉ còn lại</label>
-          <i class="bi bi-info-circle-fill" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
-          <input type="text" class="form-control" id="annualLeave disabledInput" name="annualLeave"
-            placeholder="<%=user.annualLeave%>" disabled>
-        </div>
-        <div class="mb-3">
-          <label for="annualLeave" class="form-label ">chọn số giờ nghỉ</label>
-    
-    
-          <select class="form-select ice-cream" id="time" name="time">
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="4">4</option>
-            <option value="5">5</option>
-            <option value="6">6</option>
-            <option value="7">7</option>
-            <option value="8">8</option>
-          </select>
-          <div class="result"></div>
-        </div>
-        <button type="submit" class="btn btn-primary">Nộp</button>
-      </form>
-
-      <script>
-        const selectElement = document.querySelector('.ice-cream');
-    
-        selectElement.addEventListener('change', (event) => {
-          const result = document.querySelector('.result');
-          const a = event.target.value / 8
-          result.textContent = a;
-        });
-    
-    
-    
-        $( "#datepicker" ).datepicker({multidate: true,	format: 'dd-mm-yyyy'});
-
-    
-      </script>
-
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Chú ý!!!</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-              Một ngày nghỉ tương dương với 8 tiếng.
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-    
-            </div>
-          </div>
+        <div class="modal-body">Một ngày nghỉ tương dương với 8 tiếng.</div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Close
+          </button>
         </div>
       </div>
+    </div>
+  </div>
 
-      <%- include('includes/footer.ejs') %>
+  <%- include('includes/footer.ejs') %>
+</div>

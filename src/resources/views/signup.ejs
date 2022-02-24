@@ -1,0 +1,49 @@
+<%- include('includes/header.ejs') %>
+<div class="d-flex justify-content-center m-4">
+  <form class="col-4" action="/signup" method="post">
+    <div class="mb-3">
+      <label class="form-label">Họ và tên</label>
+      <input type="text" class="form-control" name="name" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Ngày tháng năm sinh</label>
+      <input type="date" class="form-control" name="doB" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Phòng ban</label>
+      <select class="form-select" name="department">
+        <option value="it">IT</option>
+        <option value="sell">Sell</option>
+        <option value="design">Design</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Chức vụ</label>
+
+      <select class="form-select" name="manager">
+        <option value="false">Nhân viên</option>
+        <option value="true">Quản lý</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Địa chỉ Email</label>
+      <input type="email" class="form-control" name="email" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Mật Khẩu</label>
+      <input type="password" class="form-control" name="password" />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Xác nhận mật Khẩu</label>
+      <input type="password" class="form-control" name="password2" />
+    </div>
+    <div class="d-flex justify-content-between">
+
+      <button type="submit" class="btn btn-primary justify-content-start">
+        Hoàn tất
+      </button>
+    </div>
+  </form>
+</div>
+
+<%- include('includes/footer.ejs') %>

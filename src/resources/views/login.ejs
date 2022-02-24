@@ -1,0 +1,35 @@
+<%- include('includes/header.ejs') %> <% if (errorMessage) { %>
+<div class="col-3 mx-auto mt-4">
+  <div class="text-center p-3 border bg-danger text-white rounded">
+    <%= errorMessage %>
+  </div>
+</div>
+<% } %>
+<div class="d-flex justify-content-center m-4">
+  <form class="col-4" action="/login" method="post">
+    <div class="mb-3">
+      <label class="form-label">Địa chỉ Email</label>
+      <input
+        type="email"
+        class="form-control"
+        name="email"
+        value="<%= oldInput.email %>"
+      />
+    </div>
+    <div class="mb-3">
+      <label class="form-label">Mật Khẩu</label>
+      <input
+        type="password"
+        class="form-control"
+        name="password"
+        value="<%= oldInput.password %>"
+      />
+    </div>
+    <div class="d-flex justify-content-center">
+      <button type="submit" class="btn btn-primary">Đăng Nhập</button>
+      <!-- <a href="/signup" class="btn btn-primary justify-content-end">Đăng Ký</a> -->
+    </div>
+  </form>
+</div>
+
+<%- include('includes/footer.ejs') %>
